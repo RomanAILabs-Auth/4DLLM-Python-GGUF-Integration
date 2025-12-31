@@ -5,7 +5,7 @@
 ## Screenshots
 
 ### Run 4DLLM Model
-![4DLLM Studio - Run Screen](assets/screenshots/run.png)
+![4DLLM Studio - Run Screen](https://github.com/RomanAILabs-Auth/4DLLM-Python-GGUF-Integration/blob/main/run.png?raw=true)
 
 ### Train 4DLLM Model
 ![4DLLM Studio - Train Screen](assets/screenshots/train.png)
