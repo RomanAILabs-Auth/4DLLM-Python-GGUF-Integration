@@ -8,7 +8,11 @@
 ![4DLLM Studio - Run Screen](https://github.com/RomanAILabs-Auth/4DLLM-Python-GGUF-Integration/blob/main/run.png?raw=true)
 
 ### Train 4DLLM Model
-![4DLLM Studio - Train Screen](assets/screenshots/train.png)
+![4DLLM Studio - Train Screen](https://github.com/RomanAILabs-Auth/4DLLM-Python-GGUF-Integration/blob/main/train.png?raw=true)
+
+### DEMO
+
+https://youtu.be/2y7GdBYQAcQ
 
 ---
 
