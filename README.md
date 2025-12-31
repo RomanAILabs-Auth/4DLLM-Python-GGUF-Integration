@@ -1,142 +1,85 @@
-#Copyright Daniel Harding - RomanAILabs
+# 4DLLM Studio (RomanAILabs)
 
-# 4DLLM-Python-GGUF-Integration
-A runtime and builder enabling direct Python execution inside GGUF-based LLMs using the 4DLLM container format. Supports modular cognition, dependency-aware module loading, and programmable model behavior at inference time.
+**4DLLM** is a single-file container format + toolchain for local LLMs: it packages **GGUF model bytes (weights)** alongside **metadata, config, and optional Python modules/scripts** into one `.4dllm` file that you can **build, inspect, validate, and run** with safe-by-default controls.
 
-# 4DLLM-Python / GGUF-Integration
+## What’s in this repo / zip
+- `4dllm_builder_v2.0.py` — GUI builder to create `.4dllm` packages (streams GGUF; does not load whole model into RAM)
+- `4dllm_builder.py` — builder (legacy/alternate)
+- `4dllm_runner.py` — terminal runner (CLI)
+- `4dllm_runner_gui.py` — desktop GUI runner (Tk/CustomTkinter)
+- `4dllm_runner_gui_qt.py` — PyQt6 + WebEngine runner GUI (HTML/CSS UI)
+- `4dllm-antivirus.py` — GUI scanner for embedded modules/scripts (flags risky imports/calls)
+- `gguf-editor.py` — GGUF metadata editor GUI (with optional enhanced backend)
 
-## Overview
+## .4dllm file format (high level)
+A `.4dllm` contains:
+- a small header (`4DLL` + version),
+- a sequence of typed sections (GGUF, scripts, metadata, config, etc.),
+- a footer **TOC** that records section offsets/sizes and integrity checks so tools can quickly inspect/verify contents.
 
-This project implements a **custom runtime and builder** that enables **direct Python execution inside GGUF-based large language models** using the **4DLLM container format**.
+## Quick Start
 
-It allows LLMs to be extended at inference time with **modular Python cognition**, including math engines, reasoning systems, state management, and external tooling — without retraining model weights.
+### 1) Build a .4dllm (GUI)
+~~~bash
+python3 4dllm_builder_v2.0.py
+~~~
+- Select a `.gguf`
+- Add/enable scripts/modules (optional)
+- Build → outputs a `.4dllm`
 
----
+### 2) Run a .4dllm (Terminal)
+~~~bash
+python3 4dllm_runner.py --file /path/to/model.4dllm --backend llama_cpp --threads 4 --n-ctx 4096 --max-tokens 256 --temp 0.7
+~~~
 
-## What This Does
+**Safe vs Unsafe modules**
+- Safe (default): restricted imports
+- Unsafe (dangerous): allows full module imports/builtins
+~~~bash
+python3 4dllm_runner.py --file /path/to/model.4dllm --unsafe-modules
+~~~
 
-- Packages a GGUF model together with Python modules into a single `.4dllm` file
-- Executes Python modules **inside the model runtime lifecycle**
-- Supports dependency-aware module loading and cross-module imports
-- Enables programmable behavior via inference hooks (pre-prompt, post-output, etc.)
-- Streams large GGUF files safely without loading them fully into memory
+Allow a few extra imports while staying in safe mode:
+~~~bash
+python3 4dllm_runner.py --file /path/to/model.4dllm --allow-import "hashlib,pathlib"
+~~~
 
-This separates **static intelligence (weights)** from **dynamic cognition (code)**.
+### 3) Run + Inspect via GUI (Tk/CustomTkinter)
+~~~bash
+python3 4dllm_runner_gui.py
+~~~
+- Run tab: select `.4dllm`, run/stop, copy command, view output
+- Inspect tab: view package structure/sections
+- Scripts tab: view/enable/disable embedded scripts (if provided)
+- Settings: profiles and safety toggles (depending on your build)
 
----
+### 4) Run via Qt GUI (PyQt6 + WebEngine)
+~~~bash
+python3 4dllm_runner_gui_qt.py
+~~~
+Optional deps (Linux/macOS/Windows):
+~~~bash
+pip install PyQt6 PyQt6-WebEngine
+~~~
 
-## Core Components
+## Security Notes
+- **Safe mode** is the default: embedded scripts/modules should be treated as untrusted.
+- Only enable **unsafe modules** if you trust the `.4dllm` contents.
+- Use `4dllm-antivirus.py` to scan packages before running modules.
 
-### 1) 4DLLM Builder
-- Creates `.4dllm` files from:
-  - A GGUF model
-  - Metadata
-  - Python scripts
-  - Script configuration
-- Validates and packages all components into a single portable container
+## GGUF Metadata Editor
+~~~bash
+python3 gguf-editor.py
+~~~
+- Edits GGUF metadata (not training weights)
+- If an enhanced backend (`citadel_fusion_editor`) is available, it will use it; otherwise it runs in fallback mode.
 
-### 2) 4DLLM Runner
-- Extracts and runs GGUF models from `.4dllm`
-- Loads Python modules as real runtime modules
-- Resolves module dependencies automatically
-- Executes Python hooks around model inference
-- Supports both `llama-cpp-python` and `llama.cpp` CLI backends
-
----
-
-## ⚠️ Required Project Structure
-
-**A scripts folder is mandatory.**
-
-The builder expects a dedicated folder for Python modules. Modules must be placed in this folder to be discovered and packaged.
-
-### Required layout
-
-project_root/
-├── 4dllm_builder.py
-├── 4dllm_runner.py
-├── modules/
-│ ├── module_one.py
-│ ├── module_two.py
-│ └── ...
-
-
-### Rules
-
-- Folder name **must be `modules` (lowercase)**
-- Every `*.py` file inside `modules/` is treated as an injectable runtime module
-- Modules may import each other by filename (e.g. `import nebula_life_module`)
-- Module execution order is resolved automatically based on dependencies when running
-
----
-
-## Module Hooks
-
-Each module may optionally define any of the following hooks:
-
-- `pre_prompt(context)`
-- `run(context)`
-- `post_output(context)`
-- `post_prompt(context)`
-
-Modules receive a shared `context` object containing:
-
-- `input`: user input text
-- `output`: model output text (after inference)
-- `meta`: runtime metadata (including builder metadata + script_config)
-- `state`: persistent dictionary for module state (future expansion)
-- `tools`: tool registry dictionary (future expansion)
+## Troubleshooting
+- If output “hangs” in the GUI: confirm the runner process is still alive and stdout is being read/flushed.
+- If an import is blocked in safe mode: either add it to `--allow-import` or run with `--unsafe-modules` (only if trusted).
+- If the GUI looks “off”: verify you’re running the correct file from the correct folder (common gotcha).
 
 ---
-
-## Safety Modes
-
-- **Safe mode** (default): restricted imports and builtins
-- **Unsafe mode** (`--unsafe-modules`): full Python access  
-  (required for heavy stacks like NumPy, Flask, Qiskit)
-
----
-
-## Why This Exists
-
-Traditional LLMs treat model weights as the sole source of intelligence.
-
-This project introduces a programmable cognition layer that allows:
-
-- deterministic math
-- symbolic reasoning
-- stateful memory
-- external systems
-- domain-specific logic
-
-…to run inside the model runtime itself, without retraining weights.
-
----
-
-## Status
-
-- ✅ Builder functional
-- ✅ Runner functional
-- ✅ Python module injection working
-- ✅ Dependency resolution working
-- ✅ GGUF streaming extraction working
-
-This is a working v1 platform.
-
----
-
-## License
 
 Copyright Daniel Harding - RomanAILabs  
-All rights reserved unless otherwise stated.
-
-
-# 1) Run a 4DLLM container (.4dllm) with llama-cpp-python (recommended)
-cd ~/Documents/FusionTrainer && python3 4dllm_runner.py --file ~/Desktop/prototype.4dllm --backend llama_cpp --threads 4 --n-ctx 4096 --max-tokens 256 --temp 0.7 --unsafe-modules
-
-# 2) Run a GGUF directly with llama-cpp-python (no 4DLLM)
-python3 -c "from llama_cpp import Llama; llm=Llama(model_path='/path/to/model.gguf', n_ctx=4096, n_threads=4, n_gpu_layers=0); print(llm('User: Hello\\nAssistant:', max_tokens=128, temperature=0.7)['choices'][0]['text'])"
-
-# 3) Run a GGUF directly with llama.cpp CLI (main)
-#/path/to/main -m /path/to/model.gguf -c 4096 -t 4 -n 128 --temp 0.7 -p "User: Hello\nAssistant:"
-/path/to/main -m /path/to/model.gguf -c 4096 -t 4 -n 128 --temp 0.7 -p $'User: Hello\nAssistant:'
+Credits: OpenAI GPT-5.2 Thinking
