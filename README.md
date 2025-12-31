@@ -1,6 +1,16 @@
 # 4DLLM Studio (RomanAILabs)
 
-**4DLLM** is a single-file container format + toolchain for local LLMs: it packages **GGUF model bytes (weights)** alongside **metadata, config, and optional Python modules/scripts** into one `.4dllm` file that you can **build, inspect, validate, and run** with safe-by-default controls.
+**4DLLM** is a single-file container format + toolchain for local LLMs: it packages **GGUF model bytes (weights)** alongside **metadata, config, and optional Python modules/scripts** into one `.4dllm` file that you can **build, inspect, validate, train, and run** with safe-by-default controls.
+
+## Screenshots
+
+### Run 4DLLM Model
+![4DLLM Studio - Run Screen](assets/screenshots/run.png)
+
+### Train 4DLLM Model
+![4DLLM Studio - Train Screen](assets/screenshots/train.png)
+
+---
 
 ## What’s in this repo / zip
 - `4dllm_builder_v2.0.py` — GUI builder to create `.4dllm` packages (streams GGUF; does not load whole model into RAM)
