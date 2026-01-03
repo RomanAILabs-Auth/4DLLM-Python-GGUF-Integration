@@ -2,7 +2,7 @@
 
 #Copyright Daniel Harding - RomanAILabs
 
-#NOTE THIS IS CURRENTLY A DEMO and NOT A FULLY FEATURED APP
+#NOTE THIS IS CURRENTLY UNDER CONSTRUCTION, FEEL FREE TO EMAIL ME FOR DEBUGGING! romanailabs@gmail.com
 
 **4DLLM** is a single-file container format + toolchain for local LLMs: it packages **GGUF model bytes (weights)** alongside **metadata, config, and optional Python modules/scripts** into one `.4dllm` file that you can **build, inspect, validate, train, and run** with safe-by-default controls.
 
