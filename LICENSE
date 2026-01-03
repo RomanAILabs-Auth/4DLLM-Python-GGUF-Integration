@@ -1,21 +1,36 @@
-MIT License
+ROMANAILABS PROPRIETARY FREEWARE LICENSE
+Version 1.0
 
-Copyright (c) 2025 RomanAILabs-Auth
+COPYRIGHT © 2026 DANIEL HARDING - ROMANAILABS
+ALL RIGHTS RESERVED.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. PREAMBLE
+This software, including all source code, binaries, assets, and documentation (collectively, the "Software"), is the intellectual property of Daniel Harding and RomanAILabs. By downloading, installing, or using this Software, you agree to the terms of this License.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+2. GRANT OF LICENSE
+Permission is hereby granted, free of charge, to any person obtaining a copy of this Software to use, execute, and display the Software for personal, educational, or commercial purposes, subject to the conditions outlined below.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+3. RESTRICTIONS ON MODIFICATION
+The licensee is STRICTLY PROHIBITED from modifying, altering, adapting, translating, or creating derivative works of the Software source code.
+    a. The integrity of the original code must be preserved.
+    b. No part of the source code may be patched, refactored, or edited to alter the intended functionality.
+    c. Reverse engineering, decompiling, or disassembling the Software is prohibited.
+
+4. PRESERVATION OF NOTICES AND BRANDING
+All copyright notices, authorship credits, logos, and branding—specifically references to "RomanAILabs," "Daniel Harding," and the "4DLLM" trademarks—must remain intact and unmodified.
+    a. You may not remove or alter the "RomanAILabs" header from any source file.
+    b. You may not modify the GUI to obscure or remove the RomanAILabs logo or contact information.
+
+5. REDISTRIBUTION
+You may reproduce and distribute copies of the Software in its entirety, provided that:
+    a. The Software is distributed in its original, unmodified form.
+    b. This License document is included with every copy.
+    c. No fee is charged for the Software itself.
+
+6. OWNERSHIP
+Title, ownership rights, and intellectual property rights in and to the Software shall remain in Daniel Harding and RomanAILabs. This License does not transfer any ownership rights to the licensee.
+
+7. DISCLAIMER OF WARRANTY
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+END OF LICENSE
